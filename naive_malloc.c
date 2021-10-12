@@ -1,5 +1,12 @@
 #include "malloc.h"
 
+/**
+ * unallocated_memory - checks for unallocated memory
+ * @heap_start: pointer to heap start
+ * @malloc_calls: number of calls to malloc
+ * Return: void
+ */
+
 void *unallocated_memory(char *heap_start, size_t malloc_calls)
 {
 	while (malloc_calls > 0)
@@ -9,6 +16,13 @@ void *unallocated_memory(char *heap_start, size_t malloc_calls)
 	}
 	return (heap_start);
 }
+
+/**
+ * extend_memory - extends memory using sbrk()
+ * @chunk_size: size of chunk
+ * @garbage: garbage memory
+ * Return: void
+ */
 
 void *extend_memory(size_t chunk_size, size_t *garbage)
 {
@@ -21,13 +35,25 @@ void *extend_memory(size_t chunk_size, size_t *garbage)
 	return (chunk);
 }
 
+/**
+ * headers - set headers
+ * @chunk: pointer to start of chunk
+ * @chunk_size: size of the chunk
+ * @garbage: poingter to garbage memory
+ * Return: void
+ */
 void headers(char *chunk, size_t chunk_size, size_t *garbage)
 {
-        *garbage -= chunk_size;
-        *(size_t *)chunk = chunk_size;
-        *(size_t *)(chunk + *(size_t *)chunk) = *garbage;
+	*garbage -= chunk_size;
+	*(size_t *)chunk = chunk_size;
+	*(size_t *)(chunk + *(size_t *)chunk) = *garbage;
 }
 
+/**
+ * naive_malloc - allocates memory dynamically
+ * @size: size needed to be allocated for the user
+ * Return: void
+ **/
 void *naive_malloc(size_t size)
 {
 	size_t chunk_size, headers_size, garbage;
