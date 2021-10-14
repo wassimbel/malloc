@@ -17,4 +17,5 @@
 
 void *naive_malloc(size_t size);
 void _free(void *ptr);
+
 #endif /* _MALLOC_H_ */
